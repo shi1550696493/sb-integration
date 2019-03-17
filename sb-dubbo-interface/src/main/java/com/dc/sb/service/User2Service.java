@@ -17,4 +17,13 @@ public interface User2Service {
 
     void addUser(User user);
 
+    void updateState(Integer userId);
+
+    void updateUser(User user);
+
+    void logicDel(Integer userId);
+
+    void physicsDel(Integer userId);
+
+    User statistics(User user);
 }

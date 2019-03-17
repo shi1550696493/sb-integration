@@ -48,4 +48,36 @@ public class UserServiceImpl implements User2Service{
     public void addUser(User user) {
        userMapper.insertSelective(user);
     }
+
+    @Override
+    public void updateState(Integer userId) {
+        User user=new User();
+        user.setState(0);
+        user.setUserid(userId);
+        userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public void logicDel(Integer userId) {
+        User user=new User();
+        user.setDeleteState(0);
+        user.setUserid(userId);
+        userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public void physicsDel(Integer userId) {
+        userMapper.deleteByPrimaryKey(userId);
+    }
+
+    @Override
+    public User statistics(User user) {
+        user=userMapper.statistics(user);
+        return user;
+    }
 }

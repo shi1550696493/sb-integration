@@ -14,9 +14,14 @@ public class User implements Serializable {
 
     private String phone;
 
-    public User(String username, String password, String phone) {
-        this.username = username;
-        this.password = password;
-        this.phone = phone;
-    }
+    private Integer state;
+
+    private Integer deleteState;
+
+    private String startTime;
+
+    private String endTime;
+
+    private Double summation;
+
 }

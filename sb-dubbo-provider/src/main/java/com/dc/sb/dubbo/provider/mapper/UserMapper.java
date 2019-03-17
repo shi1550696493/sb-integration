@@ -1,6 +1,5 @@
 package com.dc.sb.dubbo.provider.mapper;
 
-
 import com.dc.sb.entity.User;
 
 public interface UserMapper {
@@ -15,4 +14,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User statistics(User user);
 }

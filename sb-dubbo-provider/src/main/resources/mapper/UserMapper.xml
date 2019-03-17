@@ -6,9 +6,11 @@
     <result column="userName" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="delete_state" property="deleteState" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    userId, userName, password, phone
+    userId, userName, password, phone, state, delete_state
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +24,11 @@
   </delete>
   <insert id="insert" parameterType="com.dc.sb.entity.User" >
     insert into t_user (userId, userName, password, 
-      phone)
+      phone, state, delete_state
+      )
     values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR})
+      #{phone,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{deleteState,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.dc.sb.entity.User" >
     insert into t_user
@@ -41,6 +45,12 @@
       <if test="phone != null" >
         phone,
       </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="deleteState != null" >
+        delete_state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userid != null" >
@@ -54,6 +64,12 @@
       </if>
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="deleteState != null" >
+        #{deleteState,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -69,6 +85,12 @@
       <if test="phone != null" >
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="deleteState != null" >
+        delete_state = #{deleteState,jdbcType=INTEGER},
+      </if>
     </set>
     where userId = #{userid,jdbcType=INTEGER}
   </update>
@@ -76,7 +98,25 @@
     update t_user
     set userName = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR}
+      phone = #{phone,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      delete_state = #{deleteState,jdbcType=INTEGER}
     where userId = #{userid,jdbcType=INTEGER}
   </update>
+  <select id="statistics" resultType="com.dc.sb.entity.User" >
+   /*select * from t_user u where u.userid=1*/
+    SELECT u.*,sum(i.order_money) summation FROM t_user u
+    LEFT JOIN indent i ON u.userId=i.uid
+    <where>
+      <if test="userid!=null and userid!='' ">
+        AND u.userId=#{userid}
+      </if>
+      <if test="startTime!=null and startTime!='' ">
+        AND i.order_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endTime!=null and endTime!='' ">
+        AND i.order_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
 </mapper>
