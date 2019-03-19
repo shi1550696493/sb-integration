@@ -11,6 +11,11 @@ public class User2Controller {
     @Reference(version = "1.0.0")
     private User2Service user2Service;
 
+    /**
+     * 注册
+     * @param user
+     * @return
+     */
     @PostMapping("user")
     public String addUser(@RequestBody User user){
         try {
@@ -21,6 +26,12 @@ public class User2Controller {
         }
         return "添加失败";
     }
+
+    /**
+     * 冻结用户
+     * @param userId
+     * @return
+     */
     @GetMapping("{userId}")
     public String Freeze(@PathVariable Integer userId){
         try {
@@ -31,6 +42,12 @@ public class User2Controller {
         }
         return "冻结失败";
     }
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
     @PutMapping("updateUser")
     public String UpdateUser(@RequestBody User user){
         try {
@@ -41,6 +58,12 @@ public class User2Controller {
         }
         return "修改失败";
     }
+
+    /**
+     * 逻辑删除用户
+     * @param userId
+     * @return
+     */
     @GetMapping("/logicDel/{userId}")
     public String logicDel(@PathVariable Integer userId){
         try {
@@ -51,6 +74,12 @@ public class User2Controller {
         }
         return "逻辑删除失败";
     }
+
+    /**
+     * 物理删除用户
+     * @param userId
+     * @return
+     */
     @PutMapping("/PhysicsDel/{userId}")
     public String PhysicsDel(@PathVariable Integer userId){
         try {
@@ -61,6 +90,12 @@ public class User2Controller {
         }
         return "物理删除失败";
     }
+
+    /**
+     * 查询一段时间内的下单总金额
+     * @param user
+     * @return
+     */
     @PostMapping("userStatistics")
     public User statistics(@RequestBody User user){
         User user1=new User();
