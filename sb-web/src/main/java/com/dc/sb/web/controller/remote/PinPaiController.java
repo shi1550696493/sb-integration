@@ -46,4 +46,14 @@ public class PinPaiController {
         ResultInfo resultInfo=pinPaiService.modifyPinPai(pinPaiId, pinPai);
         return resultInfo;
     }
+    @DeleteMapping("{pinPaiId}")
+    public ResultInfo deleteById(@PathVariable String pinPaiId){
+            ResultInfo resultInfo=pinPaiService.delete(pinPaiId);
+            return resultInfo;
+    }
+    @PostMapping
+    public ResultInfo save(@RequestBody PinPai pinPai){
+        ResultInfo resultInfo=pinPaiService.save(pinPai);
+        return resultInfo;
+    }
 }

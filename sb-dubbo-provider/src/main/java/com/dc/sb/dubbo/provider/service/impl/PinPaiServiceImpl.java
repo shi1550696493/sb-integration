@@ -6,12 +6,10 @@ import com.dc.sb.dubbo.provider.model.TPinpai;
 import com.dc.sb.entity.PinPai;
 import com.dc.sb.entity.ResultInfo;
 import com.dc.sb.service.PinPaiService;
-import com.dc.sb.service.RemoteUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.xml.transform.Result;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,5 +62,34 @@ public class PinPaiServiceImpl implements PinPaiService {
         }
         return result;
 
+    }
+
+    @Override
+    public ResultInfo delete(String pinPaiId) {
+        int t= pinpaiMapper.deleteByPrimaryKey(Integer.parseInt(pinPaiId));
+        ResultInfo resultInfo = ResultInfo.succcessResultInfo();
+        if (t>0){
+            resultInfo=ResultInfo.succcessResultInfo();
+            resultInfo.setMsg("成功");
+        }else {
+            resultInfo.setMsg("删除失败");
+        }
+        return resultInfo;
+    }
+
+    @Override
+    public ResultInfo save(PinPai pinPai) {
+        TPinpai tPinpai=new TPinpai(null,pinPai.getPinPaiName(),pinPai.getImgUrl());
+        int t=pinpaiMapper.insertSelective(tPinpai);
+        ResultInfo result= ResultInfo.failResultInfo();
+        if (t > 0) {
+            result=ResultInfo.succcessResultInfo();
+            result.setMsg("添加成功！");
+        }
+        else
+        {
+            result.setMsg("添加成功：更新的记录条数为0!");
+        }
+        return result;
     }
 }

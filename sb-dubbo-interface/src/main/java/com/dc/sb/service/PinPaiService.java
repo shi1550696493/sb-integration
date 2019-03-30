@@ -33,4 +33,8 @@ public interface PinPaiService {
      * @return
      */
     ResultInfo modifyPinPai(String pinPaiId, PinPai pinPai);
+
+    ResultInfo delete(String pinPaiId);
+
+    ResultInfo save(PinPai pinPai);
 }

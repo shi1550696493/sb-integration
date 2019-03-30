@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dc.sb.dubbo.provider.mapper.ShoppingcartMapper" >
+  <resultMap id="BaseResultMap" type="com.dc.sb.entity.Shoppingcart" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="VARCHAR" />
+    <result column="imgUrl" property="imgurl" jdbcType="VARCHAR" />
+    <result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
+    <result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
+    <result column="goodsdesc" property="goodsdesc" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, imgUrl, goodsName, goodsId, goodsdesc, num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shoppingcart
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shoppingcart
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dc.sb.entity.Shoppingcart" >
+    insert into shoppingcart (id, userId, imgUrl, 
+      goodsName, goodsId, goodsdesc, 
+      num)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
+      #{goodsname,jdbcType=VARCHAR}, #{goodsid,jdbcType=VARCHAR}, #{goodsdesc,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dc.sb.entity.Shoppingcart" >
+    insert into shoppingcart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="imgurl != null" >
+        imgUrl,
+      </if>
+      <if test="goodsname != null" >
+        goodsName,
+      </if>
+      <if test="goodsid != null" >
+        goodsId,
+      </if>
+      <if test="goodsdesc != null" >
+        goodsdesc,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null" >
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null" >
+        #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsdesc != null" >
+        #{goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dc.sb.entity.Shoppingcart" >
+    update shoppingcart
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        imgUrl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null" >
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null" >
+        goodsId = #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsdesc != null" >
+        goodsdesc = #{goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dc.sb.entity.Shoppingcart" >
+    update shoppingcart
+    set userId = #{userid,jdbcType=VARCHAR},
+      imgUrl = #{imgurl,jdbcType=VARCHAR},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsId = #{goodsid,jdbcType=VARCHAR},
+      goodsdesc = #{goodsdesc,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findById" resultType="com.dc.sb.entity.Shoppingcart">
+
+      select s.id,s.userId,s.imgUrl,s.goodsName,s.goodsId,s.goodsdesc,s.num,t.price from shoppingcart s
+      LEFT JOIN t_goods t ON s.goodsId=t.id
+      where userId=#{userid,jdbcType=VARCHAR}
+  </select>
+</mapper>
